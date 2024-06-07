@@ -53,7 +53,8 @@
 
 <div class="send">
     <h1>Recipient Info</h1>
-    <form action="#" method="post">
+    <form action="{{ route('store_transaction2') }}" method="post">
+        @csrf
         <div class="form-group">
             <label for="recipient">Recipient:</label>
             <input type="text" id="recipient" name="recipient" required>

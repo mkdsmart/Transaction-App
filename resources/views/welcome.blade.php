@@ -76,16 +76,18 @@
         <img src="{{ asset('images/simple-cash-flow-icon-easy-600nw-1763260874.webp')}}" alt="">
     </div>
     <div class="form-info">
-    @if (Auth::user() == null)
+    {{-- @if (Auth::user() == null)
         @dd('hello')
-        <form action="{{ route('login') }}" method="GET">
-    @else
+        <form action="{{ route('login') }}">
+    @else --}}
 
-        <form action="{{ route('dashboard') }}" method="POST">
+        <form action="{{ route('store_transaction') }}" method="POST">
+            @csrf
 
             <h2> Send money</h2>
             <label for="country">Country:</label>
-            <select name="country">
+            <select name="country" >
+                <option value="{{ old('country') }}">--Choose a country--</option>
                 <option value="Cameroon">Cameroon</option>
                 <option value="Ivory Coast">Ivory Coast</option>
                 <option value="Burkina Fasso">Burkina Fasso</option>
@@ -93,23 +95,36 @@
                 <option value="Benin">Benin</option>
                 <option value="Ethiopia">Ethiopia</option>
             </select>
+            @if($errors->has('country'))
+                <span class="text-danger">{{ $errors->first('country') }}</span>
+            @endif
+
             <label for="withdraw">withdrawal method:</label>
-            <select name="withdraw">
+            <select name="withdraw" >
+                <option value="{{ old('withdraw') }}">--Choose a country--</option>
                 <option value="Bank deposit">Bank deposit</option>
                 <option value="Orange Money">Orange Money</option>
                 <option value="MTN mobile money">MTN mobile money</option>
             </select>
+            @if($errors->has('withdraw'))
+                <span class="text-danger">{{$errors->first('withdraw')}}</span>
+            @endif
+
             <label for="moneysend"> You send:</label>
-            <input type="number" name="moneysend" id="">
+            <input type="number" name="moneysend" id="" value="{{ old('moneysend') }}">
+            @if($errors->has('moneysend'))
+                <span class="text-danger">{{$errors->first('moneysend')}}</span>
+            @endif
 
             <label for="moneyreceived">The recipient receives:</label>
             <input type="number" name="moneyreceived" id="" min="15" disabled>
+
 
             <p>Total fee -- 00 CAD</p>
             <p>The current exchange rate: 1CAD = 441.1cfa</p>
             <button type="submit">send for free</button>
         </form>
-    @endif
+    {{-- @endif --}}
     </div>
 </div>
 
