@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipient;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -22,7 +24,10 @@ class transactionController extends Controller
         Session::put('withdraw', $validatedData['withdraw']);
         Session::put('moneysend', $validatedData['moneysend']);
 
-        return redirect(route('dashboard'));
+        $recipients= Recipient::all()->where('user_id', Auth::user()->id);
+
+
+        return redirect()->route('dashboard')->with(['recipients'=> $recipients]);
     }
     public function storereceiverinfo(Request $request){
         $validatedData = $request->validate([
@@ -33,6 +38,18 @@ class transactionController extends Controller
             'phone'=>['required'],
         ]);
 
+        $recipient= Recipient::create([
+            'name'=> $validatedData['recipient'],
+            'country' => Session::get('country'),
+            'city' => $validatedData['city'],
+            'address' => $validatedData['address'],
+            'phone' => $validatedData['phone'],
+            'reason' => $validatedData['reason'],
+            'user_id' => Auth::user()->id,
+
+           ]);
+           $recipient->save();
+
         Session::put('recipient', $validatedData['recipient']);
         Session::put('reason', $validatedData['reason']);
         Session::put('city', $validatedData['city']);
@@ -41,6 +58,10 @@ class transactionController extends Controller
 
         return redirect(route('confirmation'));
 
+
+    }
+
+    public function autofill(){
 
     }
 
@@ -60,6 +81,33 @@ class transactionController extends Controller
        $transaction->save();
 
        return redirect( route('finish'));
+
+    }
+
+    public function history(){
+        $transactions = Transaction::all()->where('user_id', Auth::user()->id);
+        // dd($transactions != null);
+
+        return view('/transactionhistory', ['transactions'=> $transactions]);
+
+    }
+
+    public function payment($id){
+
+        $transaction = Transaction::find($id);
+        $transaction->status = "paid";
+        $transaction->save();
+
+        return redirect()->route('transactionhistory');
+
+    }
+    public function deleteview($id){
+
+        $transaction = Transaction::find($id);
+        $transaction->delete = 1;
+        $transaction->save();
+
+        return redirect()->route('transactionhistory');
 
     }
 }

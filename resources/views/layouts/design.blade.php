@@ -20,6 +20,9 @@
                     <li><a href="nstyled">
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
+                    @if (Auth::user() != null)
+                        <li><a href="{{ route('transactionhistory') }}">History</a></li>
+                    @endif
                 </ul>
             @if (Auth::user() == null)
 

@@ -76,10 +76,9 @@
         <img src="{{ asset('images/simple-cash-flow-icon-easy-600nw-1763260874.webp')}}" alt="">
     </div>
     <div class="form-info">
-    {{-- @if (Auth::user() == null)
-        @dd('hello')
+    @if (Auth::user() == null)
         <form action="{{ route('login') }}">
-    @else --}}
+    @endif
 
         <form action="{{ route('store_transaction') }}" method="POST">
             @csrf
@@ -124,7 +123,6 @@
             <p>The current exchange rate: 1CAD = 441.1cfa</p>
             <button type="submit">send for free</button>
         </form>
-    {{-- @endif --}}
     </div>
 </div>
 

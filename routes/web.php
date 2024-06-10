@@ -18,6 +18,11 @@ Route::view('/finish', 'finish')->name('finish');
 Route::post('/store_transaction', [transactionController::class, 'storetransactioninfo'])->name('store_transaction');
 Route::post('/store_transaction2', [transactionController::class, 'storereceiverinfo'])->name('store_transaction2');
 Route::get('/saving', [transactionController::class, 'savingdata'])->name('saving');
+Route::view('/confirmation', 'confirmation')->name('confirmation');
+Route::view('/viewhistory', 'transactionhistory')->name('viewhistory');
+Route::get('/transactionhistory', [transactionController::class, 'history'])->name('transactionhistory');
+Route::get('/payment/{id}', [transactionController::class, 'payment'])->name('payment');
+Route::get('/deleteview/{id}', [transactionController::class, 'deleteview'])->name('deleteview');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
