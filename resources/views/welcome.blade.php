@@ -110,13 +110,13 @@
             @endif
 
             <label for="moneysend"> You send:</label>
-            <input type="number" name="moneysend" id="" value="{{ old('moneysend') }}">
+            <input type="number" name="moneysend" id="amount_CAD" value="{{ old('moneysend') }}">
             @if($errors->has('moneysend'))
                 <span class="text-danger">{{$errors->first('moneysend')}}</span>
             @endif
 
             <label for="moneyreceived">The recipient receives:</label>
-            <input type="number" name="moneyreceived" id="" min="15" disabled>
+            <input type="text" name="moneyreceived" id="amount_fcfa" min="15" value="" readonly >
 
 
             <p>Total fee -- 00 CAD</p>
@@ -125,5 +125,19 @@
         </form>
     </div>
 </div>
+<script>
+    const input = document.getElementById('amount_CAD');
+    const display = document.getElementById('amount_fcfa');
+
+    // Add an event listener to capture the input event
+    input.addEventListener('input', function() {
+        // Retrieve the value from the input tag
+        const inputValue = parseInt(input.value) * 441.1;
+        // alert(inputValue);
+
+        // Display the value instantly
+        display.value = ' ' + inputValue;
+    });
+</script>
 
 @endsection

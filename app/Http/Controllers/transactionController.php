@@ -86,7 +86,7 @@ class transactionController extends Controller
 
     public function history(){
         $transactions = Transaction::all()->where('user_id', Auth::user()->id);
-        // dd($transactions != null);
+        //  dd($transactions != null);
 
         return view('/transactionhistory', ['transactions'=> $transactions]);
 
@@ -95,6 +95,11 @@ class transactionController extends Controller
     public function payment($id){
 
         $transaction = Transaction::find($id);
+        if($transaction->amount > Auth::user()->bank_account){
+            dd('not enough money');
+        }
+        Auth::user()->bank_account = Auth::user()->bank_account - $transaction->amount;
+        Auth::user()->save();
         $transaction->status = "paid";
         $transaction->save();
 
