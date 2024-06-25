@@ -18,8 +18,7 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="nstyled">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">What is your role</a></li>
                     @if (Auth::user() != null)
                         <li><a href="{{ route('transactionhistory') }}">History</a></li>
                     @endif

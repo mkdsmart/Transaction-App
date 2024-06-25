@@ -76,6 +76,7 @@
     </tr>
   </thead>
   <tbody>
+
     <!-- Table rows will be inserted here dynamically using JavaScript -->
     @if($transactions != null)
         @foreach ($transactions as $transaction)
@@ -93,7 +94,7 @@
                     <td>{{ $transaction->amount }}</td>
                     <td><button><a href="{{ route('deleteview', ['id'=> $transaction->id]) }}">delete</a></button></td>
                     <td><button id="{{ 'Btn'. (string) $transaction->id}} "><p>&#128065;</p></button>
-                        {{-- <p>{{'Btn'. (string) $transaction->id}}</p> --}}
+
 
                     <!-- The Modal -->
                     <div id="{{ $transaction->id }}" class="modal"> me

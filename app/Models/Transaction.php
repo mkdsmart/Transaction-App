@@ -20,6 +20,7 @@ class Transaction extends Model
         'withdrawal_method',
         'amount',
         'user_id',
+        'transaction_id'
 
     ];
 

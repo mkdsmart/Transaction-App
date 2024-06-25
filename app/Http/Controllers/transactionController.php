@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Helpers\Helper;
 
 class transactionController extends Controller
 {
@@ -78,6 +79,8 @@ class transactionController extends Controller
         'user_id' => Auth::user()->id,
 
        ]);
+       $transaction_id = Helper::IDtransaction(new Transaction, 'TRS');
+       $transaction->transaction_id = $transaction_id;
        $transaction->save();
 
        return redirect( route('finish'));
